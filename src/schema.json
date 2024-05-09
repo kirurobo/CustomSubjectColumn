@@ -1,0 +1,22 @@
+[
+  {
+    "namespace": "customSubject",
+    "functions": [
+      {
+        "name": "add",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id"
+          },
+          {
+            "type": "string",
+            "name": "name"
+          }
+        ]
+      }
+    ]
+  }
+]
