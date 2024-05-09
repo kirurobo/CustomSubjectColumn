@@ -1,1 +1,1 @@
-browser.customSubject.add("shorterSubjectColumn", "Short Sbj.");
+browser.customSubject.add("shorterSubjectColumn", "短縮件名");

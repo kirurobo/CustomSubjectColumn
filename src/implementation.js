@@ -13,7 +13,8 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
           ids.push(id);
 
           function getCustomizedSubject(message) {
-            return message.mime2DecodedSubject.replace(/^\[[^\]]*\]/, "");
+            //return message.mime2DecodedSubject.replace(/^\[[^\]]*\]/, "");
+            return message.mime2DecodedSubject.replace(/^F[0-9A-Z]+ - THREAT ALERT : /, "");
           }
 
           ThreadPaneColumns.addCustomColumn(id, {

@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Custom subject column",
   "description": "Adds a shorter subject column to message list panel",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Kirurobo",
   "browser_specific_settings": {
     "gecko": {
