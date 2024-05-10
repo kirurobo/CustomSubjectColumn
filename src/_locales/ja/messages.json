@@ -5,6 +5,9 @@
 	"extensionName": {
 	  "message": "Custom subject column"
 	},
+	"pattern": {
+	  "message": "正規表現"
+	},
 	"customSubject": {
 	  "message": "置換後件名"
 	}

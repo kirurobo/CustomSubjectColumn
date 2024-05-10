@@ -1,0 +1,42 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+label {
+	width: 20rem;
+	color: var(--in-content-text-color, var(--in-content-selected-text));
+}
+
+input {
+	width: 40rem;
+	color: var(--in-content-text-color, var(--in-content-selected-text));
+	background-color: var(--in-content-box-background);
+}
+
+button {
+	background-color: var(--in-content-button-background);
+	text-align: center;
+}
+button:hover {
+	background-color: var(--in-content-button-background-hover);
+	color: var(--in-content-button-text-color-hover);
+}
+
+div.field {
+	margin: 0.1rem;
+}
+div.button-field {
+	margin: 0.1rem;
+	text-align: center;
+}

@@ -1,1 +1,9 @@
-browser.customSubject.add("shorterSubjectColumn", "短縮件名");
+const id = "shorterSubjectColumn";
+var savedItem = browser.storage.sync.get({
+	columnName: 'Custom subject',
+	pattern: '^\\[[^\\]]+\\]',
+	replacedText: '',
+});
+savedItem.then((res) => {
+	browser.customSubject.add(id, res.columnName, res.pattern, res.replacedText);
+});
