@@ -2,18 +2,29 @@ var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCo
 var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
 const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/content/thread-pane-columns.mjs");
 
-const ids = [];
+var g_id_list = [];
+var g_item = {};
 
 var customSubject = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
     context.callOnClose(this);
     return {
       customSubject: {
-        async add(id, name) {
-          ids.push(id);
+        async add(id, name, pattern, replacedText) {
+          g_id_list.push(id);
+
+          g_item = {
+            name: name,
+            pattern: pattern,
+            replacedText: replacedText,
+            regexp: new RegExp(pattern, 'g'),
+          };
 
           function getCustomizedSubject(message) {
-            return message.mime2DecodedSubject.replace(/^\[[^\]]*\]/, "");
+            if (g_item.regexp) {
+              return message.mime2DecodedSubject.replace(g_item.regexp, g_item.replacedText);
+            }
+            return message.mime2DecodedSubject;
           }
 
           ThreadPaneColumns.addCustomColumn(id, {
@@ -28,16 +39,20 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
 
         async remove(id) {
           ThreadPaneColumns.removeCustomColumn(id);
-          ids.remove(id);
-        }
+          g_id_list = g_id_list.filter(e => e !== id);
+        },
       },
     };
   }
 
   close() {
-    for (const id of ids)
+    for (const id of g_id_list)
     {
-      ThreadPaneColumns.removeCustomColumn(id);
+      try {
+        ThreadPaneColumns.removeCustomColumn(id);
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 };

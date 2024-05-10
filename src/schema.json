@@ -14,6 +14,25 @@
           {
             "type": "string",
             "name": "name"
+          },
+          {
+            "type": "string",
+            "name": "pattern"
+          },
+          {
+            "type": "string",
+            "name": "replacedText"
+          }
+        ]
+      },
+      {
+        "name": "remove",
+        "type": "function",
+        "async": true,
+        "parameters": [
+          {
+            "type": "string",
+            "name": "id"
           }
         ]
       }
