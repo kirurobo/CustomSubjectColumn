@@ -1,0 +1,11 @@
+{
+	"extensionDescription": {
+	  "message": "件名を正規表現で置換した列をメッセージ一覧に追加します"
+	},
+	"extensionName": {
+	  "message": "Custom subject column"
+	},
+	"customSubject": {
+	  "message": "置換後件名"
+	}
+  }

@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "Custom subject column",
-  "description": "Adds a shorter subject column to message list panel",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Kirurobo",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
   "browser_specific_settings": {
     "gecko": {
       "id": "custom-subject-column@kirurobo.com",
@@ -34,5 +34,6 @@
         "script": "implementation.js"
       }
     }
-  }
+  },
+  "default_locale": "en"
 }

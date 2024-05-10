@@ -1,0 +1,11 @@
+{
+	"extensionDescription": {
+	  "message": "Add a column to the message list that replaces the subject with a regular expression"
+	},
+	"extensionName": {
+	  "message": "Custom subject column"
+	},
+	"customSubject": {
+	  "message": "Cust. Subj."
+	}
+  }
