@@ -2,7 +2,7 @@ var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCo
 var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
 const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/content/thread-pane-columns.mjs");
 
-var ids = [];
+var g_id_list = [];
 var g_item = {};
 
 var customSubject = class extends ExtensionCommon.ExtensionAPI {
@@ -11,7 +11,7 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
     return {
       customSubject: {
         async add(id, name, pattern, replacedText) {
-          ids.push(id);
+          g_id_list.push(id);
 
           g_item = {
             name: name,
@@ -39,15 +39,14 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
 
         async remove(id) {
           ThreadPaneColumns.removeCustomColumn(id);
-          //ids.remove(id);
-          ids = ids.filter(e => e !== id);
+          g_id_list = g_id_list.filter(e => e !== id);
         },
       },
     };
   }
 
   close() {
-    for (const id of ids)
+    for (const id of g_id_list)
     {
       try {
         ThreadPaneColumns.removeCustomColumn(id);
