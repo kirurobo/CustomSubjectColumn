@@ -20,3 +20,4 @@ Kirurobo
 
 ## 参考
 - [Full address column](https://github.com/lkosson/full-address-column) by lkosson
+- [DKIM Verifier](https://github.com/lieser/dkim_verifier) by Philippe Lieser

@@ -14,12 +14,18 @@ form {
 }
 
 label {
-	width: 20rem;
 	color: var(--in-content-text-color, var(--in-content-selected-text));
+}
+label span {
+	display: inline-block;
+	width: 5rem;
 }
 
 input {
-	width: 40rem;
+	display: inline-block;
+	width: auto;
+	margin: 0 0.1rem;
+	padding: 0;
 	color: var(--in-content-text-color, var(--in-content-selected-text));
 	background-color: var(--in-content-box-background);
 }
@@ -35,8 +41,13 @@ button:hover {
 
 div.field {
 	margin: 0.1rem;
+	width: 100%;
 }
 div.button-field {
 	margin: 0.1rem;
 	text-align: center;
+}
+
+#initialize {
+	overflow: left;
 }

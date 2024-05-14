@@ -4,31 +4,33 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Options</title>
+	<title data-i18n="options.title">Options</title>
 	<link rel='stylesheet' type='text/css' href="chrome://global/skin/in-content/common.css">
 	<link rel='stylesheet' type='text/css' href="chrome://messenger/skin/preferences/preferences.css">
 	<link rel='stylesheet' type='text/css' href="./options.css">
+	<script type="module" src="./translation.mjs.js"></script>
 </head>
 
 <body>
 	<form>
 		<div class="field">
-			<label>Column name
+			<label><span data-i18n="options.columnName">Column name</span>
 				<input type="text" id="columnName">
 			</label>
 		</div>
 		<div class="field">
-			<label>Regex pattern
+			<label><span data-i18n="options.pattern">Regex pattern</span>
 				<input type="text" id="pattern">
 			</label>
 		</div>
 		<div class="field">
-			<label>Replaced text
+			<label><span data-i18n="options.replaced">Replaced text</span>
 				<input type="text" id="replacedText">
 			</label>
 		</div>
 		<div class="button-field">
-			<button type="submit">Save</button>
+			<button type="button" id="initialize" data-i18n="options.initialize">Initialize</button>
+			<button type="submit" data-i18n="options.save">Save</button>
 		</div>
 	</form>
 	<script src="options.js"></script>
