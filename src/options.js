@@ -6,7 +6,7 @@ const defaultSettings = {
 	"replacedText": "",
 };
 
-function saveOptions(e) {
+function _saveOptions() {
 	let pattern = document.querySelector("#pattern").value;
 	let columnName = document.querySelector("#columnName").value;
 	let replacedText = document.querySelector("#replacedText").value;
@@ -20,7 +20,10 @@ function saveOptions(e) {
 
 	browser.customSubject.remove(id);
 	browser.customSubject.add(id, columnName, pattern, replacedText);
+}
 
+function saveOptions(e) {
+	_saveOptions();
 	e.preventDefault();
 }
 
@@ -31,8 +34,11 @@ function reloadOptions() {
 		replacedText: defaultSettings.replacedText,
 	});
 	getSettings.then((res) => {
-		browser.customSubject.remove(id);
-		browser.customSubject.add(id, res.columnName, res.pattern, res.replacedText);
+		//browser.customSubject.remove(id);
+		//browser.customSubject.add(id, res.columnName, res.pattern, res.replacedText);
+		document.querySelector("#pattern").value = res.pattern;
+		document.querySelector("#columnName").value = res.columnName;
+		document.querySelector("#replacedText").value = res.replacedText;
 	});
 }
 
@@ -54,7 +60,7 @@ function restoreOptions() {
 		document.querySelector("#columnName").value = defaultSettings.columnName;
 		document.querySelector("#replacedText").value = defaultSettings.replacedText;
 
-		reloadOptions();
+		_saveOptions();
 	});
 }
 
@@ -68,6 +74,6 @@ function confirmInitialize() {
 }
 
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+document.addEventListener('DOMContentLoaded', reloadOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
 document.querySelector("#initialize").addEventListener("click", confirmInitialize);
