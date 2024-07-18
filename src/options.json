@@ -1,0 +1,15 @@
+{
+	"version": 1.0,
+	"list": [
+		{
+			"id": 0,
+			"columnName": "No leading []",
+			"useRegExp": true,
+			"useGlobal": false,
+			"ignoreCase": false,
+			"pattern": "^(\\[[^\\]]+\\]\\s*)+",
+			"replacedText": "",
+			"comment": "Remove leading [...]. e.g. [ML:1][ml:2] Subject -> Subject"
+		}
+	]
+}

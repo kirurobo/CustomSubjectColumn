@@ -5,10 +5,26 @@
 	"extensionName": {
 	  "message": "Custom Subject Column"
 	},
-	"pattern": {
-	  "message": "正規表現"
+	
+	"options.pattern": {
+		"message":"パターン"
 	},
-	"customSubject": {
-	  "message": "置換後件名"
+	"options.columnName": {
+		"message":"列名"
+	},
+	"options.replaced": {
+		"message":"置換後"
+	},
+	"options.save": {
+		"message":"保存"
+	},
+	"options.initialize": {
+		"message":"初期化..."
+	},
+	"options.confirmInitialize": {
+		"message":"設定を全て初期化しますか？"
+	},
+	"options.title": {
+		"message":"設定"
 	}
   }

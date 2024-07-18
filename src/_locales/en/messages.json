@@ -5,10 +5,26 @@
 	"extensionName": {
 	  "message": "Custom Subject Column"
 	},
-	"pattern": {
-	  "message": "Pattern"
+
+	"options.pattern": {
+		"message":"Pattern"
 	},
-	"customSubject": {
-	  "message": "Cust. Subj."
+	"options.columnName": {
+		"message":"Column name"
+	},
+	"options.replaced": {
+		"message":"Replaced text"
+	},
+	"options.save": {
+		"message":"Save"
+	},
+	"options.initialize": {
+		"message":"Initialize..."
+	},
+	"options.confirmInitialize": {
+		"message":"Are you sure you want to initialize the settings?"
+	},
+	"options.title": {
+		"message":"Custom Subject Column Options"
 	}
   }
