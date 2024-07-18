@@ -1,6 +1,22 @@
 var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
 var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
-const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/content/thread-pane-columns.mjs");
+
+// Before Thunderbird 115.*
+ChromeUtils.defineESModuleGetters(this, {
+  ThreadPaneColumns: "chrome://messenger/content/thread-pane-columns.mjs",
+});
+
+try {
+  if (typeof ThreadPaneColumns === "undefined") {
+    console.error("thread-pane-columns.mjs is not exists.");
+    throw new Error("thread-pane-columns.mjs is not exists.");
+  }
+} catch (e) {
+  // After Thunderbird 128.0
+  ChromeUtils.defineESModuleGetters(this, {
+    ThreadPaneColumns: "chrome://messenger/content/ThreadPaneColumns.mjs",
+  });
+}
 
 var g_id_list = [];
 var g_item = {};
@@ -27,18 +43,24 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
             return message.mime2DecodedSubject;
           }
 
-          ThreadPaneColumns.addCustomColumn(id, {
-            name: name,
-            hidden: false,
-            icon: false,
-            resizable: true,
-            sortable: true,
-            textCallback: getCustomizedSubject,
-          });
+          if (typeof ThreadPaneColumns !== "undefined") {
+            ThreadPaneColumns.addCustomColumn(id, {
+              name: name,
+              hidden: false,
+              icon: false,
+              resizable: true,
+              sortable: true,
+              textCallback: getCustomizedSubject,
+            });
+          } else {
+            console.error("ThreadPaneColumns is not defined.");
+          }
         },
 
         async remove(id) {
-          ThreadPaneColumns.removeCustomColumn(id);
+          if (typeof ThreadPaneColumns !== "undefined") {
+            ThreadPaneColumns.removeCustomColumn(id);
+          }
           g_id_list = g_id_list.filter(e => e !== id);
         },
       },
