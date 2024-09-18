@@ -27,6 +27,13 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
     context.callOnClose(this);
     return {
       customSubject: {
+        /**
+         * 指定されたIDでカスタム列を追加する
+         * @param {string} id
+         * @param {string} name
+         * @param {string} pattern
+         * @param {string} replacedText
+         */
         async add(id, name, pattern, replacedText) {
           g_id_list.push(id);
 
@@ -54,6 +61,10 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
           });
         },
 
+        /**
+         * 指定されたIDのカスタム列を削除する
+         * @param {string} id
+         */
         async remove(id) {
           try {
             ThreadPaneColumns.removeCustomColumn(id);
@@ -62,6 +73,23 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
           }
           g_id_list = g_id_list.filter(e => e !== id);
         },
+
+        /**
+         * 保存されている設定を読み込む
+         */
+        async load() {
+          var savedItems = browser.storage.sync.get({
+            json: '{}',
+            version: 1.0,
+          });
+          savedItems.then((res) => {
+            const items = JSON.parse(res.json);
+            for (const id in items) {
+              const item = items[id];
+              this.add(id, item.columnName, item.pattern, item.replacedText);
+            }
+          });
+        }
       },
     };
   }
