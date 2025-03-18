@@ -8,20 +8,24 @@
         "async": true,
         "parameters": [
           {
+            "name": "id",
             "type": "string",
-            "name": "id"
+            "description": "Unique ID for the column"
           },
           {
+            "name": "name",
             "type": "string",
-            "name": "name"
+            "description": "Name of the column"
           },
           {
+            "name": "pattern",
             "type": "string",
-            "name": "pattern"
+            "description": "Pattern to match the subject"
           },
           {
+            "name": "replacedText",
             "type": "string",
-            "name": "replacedText"
+            "description": "Text to replace the matched part"
           }
         ]
       },
@@ -31,8 +35,27 @@
         "async": true,
         "parameters": [
           {
+            "name": "id",
             "type": "string",
-            "name": "id"
+            "description": "Unique ID for the column"
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "type": "function",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "getKeyString",
+        "type": "function",
+        "async": false,
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string",
+            "description": "Unique ID for the column"
           }
         ]
       }

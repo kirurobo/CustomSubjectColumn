@@ -1,23 +1,13 @@
-var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
-var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
+"use strict";
+
+(function (exports) {
+
+const { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
+const { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
+
+// After Thunderbird 128.0
 const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/content/ThreadPaneColumns.mjs");
 
-// // Before Thunderbird 115.*
-// ChromeUtils.defineESModuleGetters(this, {
-//   ThreadPaneColumns: "chrome://messenger/content/thread-pane-columns.mjs",
-// });
-
-// try {
-//   if (typeof ThreadPaneColumns === "undefined") {
-//     console.error("thread-pane-columns.mjs is not exists.");
-//     throw new Error("thread-pane-columns.mjs is not exists.");
-//   }
-// } catch (e) {
-//   // After Thunderbird 128.0
-//   ChromeUtils.defineESModuleGetters(this, {
-//     ThreadPaneColumns: "chrome://messenger/content/ThreadPaneColumns.mjs",
-//   });
-// }
 
 var g_id_list = [];
 var g_item = {};
@@ -25,6 +15,7 @@ var g_item = {};
 var customSubject = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
     context.callOnClose(this);
+
     return {
       customSubject: {
         /**
@@ -35,6 +26,8 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
          * @param {string} replacedText
          */
         async add(id, name, pattern, replacedText) {
+          console.log('add', id, name, pattern, replacedText);
+          
           g_id_list.push(id);
 
           g_item = {
@@ -71,6 +64,10 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
           } catch (e) {
             console.error(e);
           }
+          browser.storage.sync.remove({
+            json: JSON.stringify(items),
+            version: 1.0,
+          });
           g_id_list = g_id_list.filter(e => e !== id);
         },
 
@@ -89,6 +86,12 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
               this.add(id, item.columnName, item.pattern, item.replacedText);
             }
           });
+        },
+
+        /** 保存時のキー文字列を生成 */
+        getKeyString(id) {
+          const idPrefix = "CustomSubjectColumn_";
+          return idPrefix + id;
         }
       },
     };
@@ -105,3 +108,7 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
     }
   }
 };
+
+exports.customSubject = customSubject;
+
+})(this);
