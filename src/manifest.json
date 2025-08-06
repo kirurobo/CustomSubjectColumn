@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.6.4",
+  "version": "0.6.5",
   "author": "Kirurobo",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
@@ -8,17 +8,14 @@
     "gecko": {
       "id": "custom-subject-column@kirurobo.com",
       "strict_min_version": "128.0",
-      "strict_max_version": "136.*"
+      "strict_max_version": "141.*"
     }
   },
   "background": {
-    "persistant": false,
     "scripts": [
       "background.js"
-    ]
-  },
-  "action": {
-    "default_title": "__MSG_extensionName__"
+    ],
+    "type": "module"
   },
   "icons": {
     "64": "icon.svg",
@@ -35,8 +32,14 @@
     "customSubject": {
       "schema": "schema.json",
       "parent": {
-        "scopes": ["addon_parent"],
-        "paths": [["customSubject"]],
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "customSubject"
+          ]
+        ],
         "script": "implementation.js"
       }
     }

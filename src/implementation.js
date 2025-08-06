@@ -1,11 +1,7 @@
-"use strict";
+const { ExtensionCommon } = ChromeUtils.importESModule("resource://gre/modules/ExtensionCommon.sys.mjs");
+const { ExtensionSupport } = ChromeUtils.importESModule("resource:///modules/ExtensionSupport.sys.mjs");
 
-(function (exports) {
-
-const { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
-const { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
-
-// After Thunderbird 128.0
+// Thunderbird 128.0 より前はサポートしない
 const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/content/ThreadPaneColumns.mjs");
 
 
@@ -25,7 +21,12 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
          * @param {string} pattern
          * @param {string} replacedText
          */
-        async add(id, name, pattern, replacedText) {
+        add(id, name, pattern, replacedText) {
+          // 指定IDがすでに存在する場合は削除してから追加する
+          if (g_id_list.includes(id)) {
+            console.warn(`Column with ID ${id} already exists. Removed.`);
+            this.remove(id);
+          }
           console.log('add', id, name, pattern, replacedText);
           
           g_id_list.push(id);
@@ -58,7 +59,14 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
          * 指定されたIDのカスタム列を削除する
          * @param {string} id
          */
-        async remove(id) {
+        remove(id) {
+          // 指定IDが存在しない場合は終了
+          if (!g_id_list.includes(id)) {
+            console.warn(`Column with ID ${id} does not exist.`);
+            return;
+          }
+          console.log('remove', id);
+
           try {
             ThreadPaneColumns.removeCustomColumn(id);
           } catch (e) {
@@ -74,7 +82,7 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
         /**
          * 保存されている設定を読み込む
          */
-        async load() {
+        load() {
           var savedItems = browser.storage.sync.get({
             json: '{}',
             version: 1.0,
@@ -97,18 +105,24 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
     };
   }
 
+  /**
+   * 拡張機能が閉じられたときに呼び出される
+   */
   close() {
-    for (const id of g_id_list)
-    {
+    // 現時点のIDリストのコピーを作成
+    const currentIdList = g_id_list.slice();
+    for (const id of currentIdList){
       try {
-        ThreadPaneColumns.removeCustomColumn(id);
+        // 指定IDの列が存在するか確認してから削除
+        if (ThreadPaneColumns.getCustomColun && ThreadPaneColumns.getCustomColumn(id)) {
+          ThreadPaneColumns.removeCustomColumn(id);
+        }
       } catch (e) {
         console.error(e);
       }
     }
+
+    // IDリストをクリア
+    g_id_list = [];
   }
 };
-
-exports.customSubject = customSubject;
-
-})(this);

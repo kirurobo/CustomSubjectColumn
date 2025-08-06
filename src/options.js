@@ -1,3 +1,5 @@
+// 旧バージョンでの固定ID
+const id = "shorterSubjectColumn";
 
 // このアドオンの列につけるID接頭辞
 const idPrefix = "CustomSubjectColumn_";
@@ -54,11 +56,12 @@ function _saveOptions() {
 		pattern: pattern,
 		columnName: columnName,
 		replacedText: replacedText,
-
 	});
 
-	browser.customSubject.remove(idPrefix);
-	browser.customSubject.add(idPrefix, columnName, pattern, replacedText);
+	browser.customSubject.remove(id);
+	browser.customSubject.add(id, columnName, pattern, replacedText);
+	//browser.customSubject.remove(idPrefix);
+	//browser.customSubject.add(idPrefix, columnName, pattern, replacedText);
 }
 
 /**
@@ -74,6 +77,9 @@ function reloadOptions() {
 		document.querySelector("#pattern").value = res.pattern;
 		document.querySelector("#columnName").value = res.columnName;
 		document.querySelector("#replacedText").value = res.replacedText;
+
+		// 設定を適用して保存
+		_saveOptions();
 	});
 }
 
