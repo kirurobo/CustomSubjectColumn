@@ -3,37 +3,42 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title data-i18n="options.title">Options</title>
-	<link rel='stylesheet' type='text/css' href="chrome://global/skin/in-content/common.css">
-	<link rel='stylesheet' type='text/css' href="chrome://messenger/skin/preferences/preferences.css">
-	<link rel='stylesheet' type='text/css' href="./options.css">
-	<script type="module" src="./translation.mjs.js"></script>
+    <meta charset="utf-8">
+    <title data-i18n="options.title">Options</title>
+    <link rel='stylesheet' type='text/css' href="chrome://global/skin/in-content/common.css">
+    <link rel='stylesheet' type='text/css' href="chrome://messenger/skin/preferences/preferences.css">
+    <link rel='stylesheet' type='text/css' href="./options.css">
+    <script type="module" src="./translation.mjs.js"></script>
 </head>
 
 <body>
-	<form>
-		<div class="field">
-			<label><span data-i18n="options.columnName">Column name</span>
-				<input type="text" id="columnName">
-			</label>
-		</div>
-		<div class="field">
-			<label><span data-i18n="options.pattern">Regex pattern</span>
-				<input type="text" id="pattern">
-			</label>
-		</div>
-		<div class="field">
-			<label><span data-i18n="options.replaced">Replaced text</span>
-				<input type="text" id="replacedText">
-			</label>
-		</div>
-		<div class="button-field">
-			<button type="button" id="initialize" data-i18n="options.initialize">Initialize</button>
-			<button type="submit" data-i18n="options.save">Save</button>
-		</div>
-	</form>
-	<script src="options.js"></script>
+    <form>
+        <div id="rulesContainer">
+            <!-- Rules will be dynamically inserted here -->
+        </div>
+        <div class="button-field">
+            <button type="button" id="addRule" data-i18n="options.addRule">Add Rule</button>
+            <button type="button" id="initialize" data-i18n="options.initialize">Initialize</button>
+            <button type="submit" data-i18n="options.save">Save</button>
+        </div>
+    </form>
+
+    <template id="ruleTemplate">
+        <div class="rule-field">
+            <label><span data-i18n="options.columnName">Column name</span>
+                <input type="text" class="columnName" required>
+            </label>
+            <label><span data-i18n="options.pattern">Regex pattern</span>
+                <input type="text" class="pattern" required>
+            </label>
+            <label><span data-i18n="options.replaced">Replaced text</span>
+                <input type="text" class="replacedText">
+            </label>
+            <button type="button" class="removeRule" data-i18n="options.removeRule">Remove</button>
+        </div>
+    </template>
+
+    <script src="options.js"></script>
 </body>
 
 </html>

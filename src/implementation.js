@@ -6,7 +6,6 @@ const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/con
 
 
 var g_id_list = [];
-var g_item = {};
 
 var customSubject = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
@@ -28,19 +27,14 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
             this.remove(id);
           }
           console.log('add', id, name, pattern, replacedText);
-          
+
           g_id_list.push(id);
 
-          g_item = {
-            name: name,
-            pattern: pattern,
-            replacedText: replacedText,
-            regexp: new RegExp(pattern, 'g'),
-          };
+          const regexp = pattern ? new RegExp(pattern, 'g') : null;
 
           function getCustomizedSubject(message) {
-            if (g_item.regexp) {
-              return message.mime2DecodedSubject.replace(g_item.regexp, g_item.replacedText);
+            if (regexp) {
+              return message.mime2DecodedSubject.replace(regexp, replacedText);
             }
             return message.mime2DecodedSubject;
           }
@@ -72,10 +66,6 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
           } catch (e) {
             console.error(e);
           }
-          browser.storage.sync.remove({
-            json: JSON.stringify(items),
-            version: 1.0,
-          });
           g_id_list = g_id_list.filter(e => e !== id);
         },
 
@@ -111,7 +101,7 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
   close() {
     // 現時点のIDリストのコピーを作成
     const currentIdList = g_id_list.slice();
-    for (const id of currentIdList){
+    for (const id of currentIdList) {
       try {
         // 指定IDの列が存在するか確認してから削除
         if (ThreadPaneColumns.getCustomColun && ThreadPaneColumns.getCustomColumn(id)) {
