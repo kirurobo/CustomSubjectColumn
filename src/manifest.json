@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.6.5",
+  "version": "0.7.0",
   "author": "Kirurobo",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",

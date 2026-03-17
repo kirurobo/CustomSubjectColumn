@@ -18,7 +18,9 @@ Kirurobo
   - 組が多くなると列の選択肢が大量となる可能性があるため、フォルダ指定で絞れても良いかもしれない
 
 
-## 設定ファイル（実装途中）
+## 設定情報案
+（案であり未実装。将来的にJSONでのインポート、エクスポートに対応を想定）
+
 ### options.json
 ```json
 {
@@ -26,6 +28,7 @@ Kirurobo
 	"list": [
 		{
 			"id": 0,
+			"ruleNo": 1,
 			"columnName": "No leading []",
 			"useRegExp": true,
 			"useGlobal": false,
@@ -40,7 +43,8 @@ Kirurobo
 
 | プロパティ | 型 | 説明 |
 |-----------|----|------|
-| id        | int | 識別番号 |
+| id        | int | Thunderbird 内部の列ID |
+| ruleNo    | int | 列を識別する番号 |
 | columnName| str | 列の表示名 |
 | useRegExp | bool| true: 正規表現, false: 単純文字列 |
 | useGlobal | bool| true: 置換を繰り返す, false: 1回のみ |
@@ -60,4 +64,5 @@ Kirurobo
 
 
 ## 更新履歴
+- v0.7.0 : 2026-03-18 : 複数列の作成に対応。Thunderbird 148 に対応
 - v0.5.6 : 2024-07-18 : Thunderbird 128.0 にも対応
