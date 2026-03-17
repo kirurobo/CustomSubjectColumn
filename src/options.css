@@ -1,11 +1,5 @@
-html {
-	height: 100%;
-}
-
 body {
-	margin: 0px;
-	padding: 0px;
-	height: 100%;
+	margin: 0.2rem;
 }
 
 form {
@@ -16,6 +10,7 @@ form {
 label {
 	color: var(--in-content-text-color, var(--in-content-selected-text));
 }
+
 label span {
 	display: inline-block;
 	width: 5rem;
@@ -23,9 +18,8 @@ label span {
 
 input {
 	display: inline-block;
-	width: auto;
+	width: 75%;
 	margin: 0 0.1rem;
-	padding: 0;
 	color: var(--in-content-text-color, var(--in-content-selected-text));
 	background-color: var(--in-content-box-background);
 }
@@ -34,34 +28,44 @@ button {
 	background-color: var(--in-content-button-background);
 	text-align: center;
 }
+
 button:hover {
 	background-color: var(--in-content-button-background-hover);
 	color: var(--in-content-button-text-color-hover);
 }
 
-div.field, div.rule-field {
+div.field,
+div.rule-field {
 	margin: 0.1rem;
-	width: 100%;
+	width: 90%;
+	text-align: right;
 }
 
 div.rule-field {
-    border: 1px solid var(--in-content-box-border-color, #ccc);
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    position: relative;
-    background-color: var(--in-content-box-background);
+	border: 1px solid var(--in-content-box-border-color, #ccc);
+	padding: 8px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	position: relative;
+	background-color: var(--in-content-box-background);
 }
 
 div.rule-field label {
-    display: block;
-    margin-bottom: 5px;
+	display: block;
+	text-align: left;
+	margin-bottom: 5px;
+}
+
+div.rule-field label span {
+	margin: 0 0.2rem;
+	width: 20%;
 }
 
 button.removeRule {
-    margin-top: 5px;
-    color: #ff4a4a;
+	margin-top: 5px;
+	color: #ff4a4a;
 }
+
 div.button-field {
 	margin: 0.1rem;
 	text-align: center;

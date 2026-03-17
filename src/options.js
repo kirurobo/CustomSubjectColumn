@@ -38,6 +38,10 @@ function renderRules() {
 
 	currentRules.forEach((rule, index) => {
 		const clone = template.content.cloneNode(true);
+
+		// Apply i18n to the cloned template
+		applyI18n(clone);
+
 		clone.querySelector(".columnName").value = rule.columnName;
 		clone.querySelector(".pattern").value = rule.pattern;
 		clone.querySelector(".replacedText").value = rule.replacedText || "";
@@ -130,6 +134,8 @@ function reloadOptions() {
 		// 設定を適用して保存
 		_saveOptions();
 	});
+	// 全体に対して翻訳を適用
+	applyI18n(document);
 }
 
 /**
@@ -162,6 +168,19 @@ function _confirmResetOptions() {
 	}
 }
 
+/**
+ * data-i18n属性を持つ要素のテキストをロケールに合わせて置換
+ * @param {*} element 
+ */
+function applyI18n(element) {
+	const i18nElements = element.querySelectorAll("[data-i18n]");
+	for (const el of i18nElements) {
+		const messageName = el.dataset.i18n;
+		if (messageName) {
+			el.innerText = browser.i18n.getMessage(messageName) || messageName;
+		}
+	}
+}
 
 document.addEventListener('DOMContentLoaded', reloadOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
