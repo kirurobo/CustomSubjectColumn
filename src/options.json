@@ -3,6 +3,7 @@
 	"list": [
 		{
 			"id": 0,
+			"ruleNo": 1,
 			"columnName": "No leading []",
 			"useRegExp": true,
 			"useGlobal": false,

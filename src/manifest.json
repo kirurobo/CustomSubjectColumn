@@ -1,20 +1,21 @@
 {
-  "manifest_version": 2,
-  "version": "0.5.6",
+  "manifest_version": 3,
+  "version": "0.7.0",
   "author": "Kirurobo",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "browser_specific_settings": {
     "gecko": {
       "id": "custom-subject-column@kirurobo.com",
-      "strict_min_version": "115.10.0",
-      "strict_max_version": "128.*"
+      "strict_min_version": "128.0",
+      "strict_max_version": "148.*"
     }
   },
   "background": {
     "scripts": [
       "background.js"
-    ]
+    ],
+    "type": "module"
   },
   "icons": {
     "64": "icon.svg",
@@ -22,8 +23,7 @@
     "16": "icon.svg"
   },
   "options_ui": {
-    "page": "options.html",
-    "browser_style": true
+    "page": "options.html"
   },
   "permissions": [
     "storage"

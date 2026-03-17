@@ -1,80 +1,118 @@
-var { ExtensionCommon } = ChromeUtils.import("resource://gre/modules/ExtensionCommon.jsm");
-var { ExtensionSupport } = ChromeUtils.import("resource:///modules/ExtensionSupport.jsm");
+const { ExtensionCommon } = ChromeUtils.importESModule("resource://gre/modules/ExtensionCommon.sys.mjs");
+const { ExtensionSupport } = ChromeUtils.importESModule("resource:///modules/ExtensionSupport.sys.mjs");
 
-// Before Thunderbird 115.*
-ChromeUtils.defineESModuleGetters(this, {
-  ThreadPaneColumns: "chrome://messenger/content/thread-pane-columns.mjs",
-});
+// Thunderbird 128.0 より前はサポートしない
+const { ThreadPaneColumns } = ChromeUtils.importESModule("chrome://messenger/content/ThreadPaneColumns.mjs");
 
-try {
-  if (typeof ThreadPaneColumns === "undefined") {
-    console.error("thread-pane-columns.mjs is not exists.");
-    throw new Error("thread-pane-columns.mjs is not exists.");
-  }
-} catch (e) {
-  // After Thunderbird 128.0
-  ChromeUtils.defineESModuleGetters(this, {
-    ThreadPaneColumns: "chrome://messenger/content/ThreadPaneColumns.mjs",
-  });
-}
 
 var g_id_list = [];
-var g_item = {};
 
 var customSubject = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
     context.callOnClose(this);
+
     return {
       customSubject: {
-        async add(id, name, pattern, replacedText) {
+        /**
+         * 指定されたIDでカスタム列を追加する
+         * @param {string} id
+         * @param {string} name
+         * @param {string} pattern
+         * @param {string} replacedText
+         */
+        add(id, name, pattern, replacedText) {
+          // 指定IDがすでに存在する場合は削除してから追加する
+          if (g_id_list.includes(id)) {
+            console.warn(`Column with ID ${id} already exists. Removed.`);
+            this.remove(id);
+          }
+          console.log('add', id, name, pattern, replacedText);
+
           g_id_list.push(id);
 
-          g_item = {
-            name: name,
-            pattern: pattern,
-            replacedText: replacedText,
-            regexp: new RegExp(pattern, 'g'),
-          };
+          const regexp = pattern ? new RegExp(pattern, 'g') : null;
 
           function getCustomizedSubject(message) {
-            if (g_item.regexp) {
-              return message.mime2DecodedSubject.replace(g_item.regexp, g_item.replacedText);
+            if (regexp) {
+              return message.mime2DecodedSubject.replace(regexp, replacedText);
             }
             return message.mime2DecodedSubject;
           }
 
-          if (typeof ThreadPaneColumns !== "undefined") {
-            ThreadPaneColumns.addCustomColumn(id, {
-              name: name,
-              hidden: false,
-              icon: false,
-              resizable: true,
-              sortable: true,
-              textCallback: getCustomizedSubject,
-            });
-          } else {
-            console.error("ThreadPaneColumns is not defined.");
-          }
+          ThreadPaneColumns.addCustomColumn(id, {
+            name: name,
+            hidden: false,
+            icon: false,
+            resizable: true,
+            sortable: true,
+            textCallback: getCustomizedSubject,
+          });
         },
 
-        async remove(id) {
-          if (typeof ThreadPaneColumns !== "undefined") {
+        /**
+         * 指定されたIDのカスタム列を削除する
+         * @param {string} id
+         */
+        remove(id) {
+          // 指定IDが存在しない場合は終了
+          if (!g_id_list.includes(id)) {
+            console.warn(`Column with ID ${id} does not exist.`);
+            return;
+          }
+          console.log('remove', id);
+
+          try {
             ThreadPaneColumns.removeCustomColumn(id);
+          } catch (e) {
+            console.error(e);
           }
           g_id_list = g_id_list.filter(e => e !== id);
         },
+
+        /**
+         * 保存されている設定を読み込む
+         */
+        load() {
+          var savedItems = browser.storage.sync.get({
+            json: '{}',
+            version: 1.0,
+          });
+          savedItems.then((res) => {
+            const items = JSON.parse(res.json);
+            for (const id in items) {
+              const item = items[id];
+              this.add(id, item.columnName, item.pattern, item.replacedText);
+            }
+          });
+        },
+
+        /** 保存時のキー文字列を生成 */
+        getKeyString(id) {
+          const idPrefix = "CustomSubjectColumn_";
+          return idPrefix + id;
+        }
       },
     };
   }
 
+  /**
+   * 拡張機能が閉じられたときに呼び出される
+   */
   close() {
-    for (const id of g_id_list)
-    {
+    // 現時点のIDリストのコピーを作成
+    const currentIdList = g_id_list.slice();
+    for (const id of currentIdList) {
       try {
-        ThreadPaneColumns.removeCustomColumn(id);
+        // 指定IDの列が存在するか確認してから削除
+        if (ThreadPaneColumns.getCustomColun && ThreadPaneColumns.getCustomColumn(id)) {
+          ThreadPaneColumns.removeCustomColumn(id);
+        }
       } catch (e) {
         console.error(e);
       }
     }
+
+    // IDリストをクリア
+    g_id_list = [];
   }
 };

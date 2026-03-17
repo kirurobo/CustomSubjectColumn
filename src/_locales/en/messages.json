@@ -1,30 +1,41 @@
 {
 	"extensionDescription": {
-	  "message": "Add a column to the message list that replaces the subject with a regular expression"
+		"message": "Add a column to the message list that replaces the subject with a regular expression"
 	},
 	"extensionName": {
-	  "message": "Custom Subject Column"
+		"message": "Custom Subject Column"
 	},
-
+	"options.ruleNumber": {
+		"message": "Rule #"
+	},
 	"options.pattern": {
-		"message":"Pattern"
+		"message": "Pattern"
 	},
 	"options.columnName": {
-		"message":"Column name"
+		"message": "Column name"
 	},
 	"options.replaced": {
-		"message":"Replaced text"
+		"message": "Replaced text"
+	},
+	"options.addRule": {
+		"message": "Add rule"
+	},
+	"options.removeRule": {
+		"message": "Remove rule"
 	},
 	"options.save": {
-		"message":"Save"
+		"message": "Save"
 	},
 	"options.initialize": {
-		"message":"Initialize..."
+		"message": "Initialize..."
 	},
 	"options.confirmInitialize": {
-		"message":"Are you sure you want to initialize the settings?"
+		"message": "Are you sure you want to initialize the settings?"
 	},
 	"options.title": {
-		"message":"Custom Subject Column Options"
+		"message": "Custom Subject Column Options"
+	},
+	"options.errorInvalidRegex": {
+		"message": "Invalid Regular Expression in Rule No {0}:\n"
 	}
-  }
+}
