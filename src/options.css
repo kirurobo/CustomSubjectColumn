@@ -24,6 +24,10 @@ input {
 	background-color: var(--in-content-box-background);
 }
 
+input.ruleNo {
+	width: 15%;
+}
+
 button {
 	background-color: var(--in-content-button-background);
 	text-align: center;

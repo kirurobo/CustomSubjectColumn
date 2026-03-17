@@ -5,6 +5,9 @@
 	"extensionName": {
 		"message": "Custom Subject Column"
 	},
+	"options.ruleNumber": {
+		"message": "Rule #"
+	},
 	"options.pattern": {
 		"message": "Pattern"
 	},
@@ -31,5 +34,8 @@
 	},
 	"options.title": {
 		"message": "Custom Subject Column Options"
+	},
+	"options.errorInvalidRegex": {
+		"message": "Invalid Regular Expression in Rule No {0}:\n"
 	}
 }
