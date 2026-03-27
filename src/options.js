@@ -8,7 +8,7 @@ const defaultSettings = {
 			"id": "shorterSubjectColumn",
 			"ruleNo": 1,
 			"columnName": "Custom subject",
-			"pattern": "^\\[[^\\]]+\\]",
+			"pattern": "^(\\([^\\(]*\\)|\\[[^\\]]+\\]*|\\s)*",
 			"replacedText": "",
 		}
 	]
