@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.8.1",
+  "version": "0.8.2",
   "author": "Kirurobo",
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
@@ -8,7 +8,7 @@
     "gecko": {
       "id": "custom-subject-column@kirurobo.com",
       "strict_min_version": "128.0",
-      "strict_max_version": "152.*"
+      "strict_max_version": "*"
     }
   },
   "background": {
