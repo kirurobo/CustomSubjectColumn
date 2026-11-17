@@ -104,7 +104,7 @@ var customSubject = class extends ExtensionCommon.ExtensionAPI {
     for (const id of currentIdList) {
       try {
         // 指定IDの列が存在するか確認してから削除
-        if (ThreadPaneColumns.getCustomColun && ThreadPaneColumns.getCustomColumn(id)) {
+        if (ThreadPaneColumns.getCustomColumn && ThreadPaneColumns.getCustomColumn(id)) {
           ThreadPaneColumns.removeCustomColumn(id);
         }
       } catch (e) {
